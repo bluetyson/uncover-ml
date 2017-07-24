@@ -1,0 +1,30 @@
+/home/masoud/fromJohn/LATITUDE_GRID1.tif   
+#/home/masoud/fromJohn/LOC_distance_to_coast.tif
+/home/masoud/fromJohn/LONGITUDE_GRID1.tif
+/home/masoud/fromJohn/ceno_euc.tif
+#/home/masoud/fromJohn/ceno_grd.tif
+#/home/masoud/fromJohn/ceno_sm2.tif
+/home/masoud/fromJohn/dem6000.tif
+/home/masoud/fromJohn/flow_2_re.tif
+#/home/masoud/fromJohn/dem_fill.tif
+# categorical
+# /home/masoud/fromJohn/erdep_ceno_MB.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_1228.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_18124.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_35524.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_97479.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_6605.tif
+/home/masoud/fromJohn/mb_masked_grav_cont_2407.tif
+/home/masoud/fromJohn/mb_masked_grav_IR_gravity_anomaly_Australia_V1.tif
+/home/masoud/fromJohn/PM_Gravity_MB.tif
+/home/masoud/fromJohn/diff_grav.tif
+# don't use next 2
+#/home/masoud/fromJohn/mb_masked_magmap_v6_2015_VRTP.tif
+#/home/masoud/fromJohn/mb_masked_magmap_v6_2015_VRTP_uc2km.tif
+/home/masoud/fromJohn/mb_masked_magmap_v6_2015_VRTP_uc10km.tif
+/home/masoud/fromJohn/mb_masked_magmap_v6_2015_VRTP_uc5km.tif
+/home/masoud/fromJohn/mb_masked_v6_2015_VRTP_uc5km_minus_uc10km.tif
+# continuous but high freq
+#/home/masoud/fromJohn/slope_fill2.tif
+#/home/masoud/fromJohn/solid_geology.tif
+/home/masoud/fromJohn/tilt_aust.tif

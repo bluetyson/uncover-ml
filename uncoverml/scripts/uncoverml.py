@@ -3,6 +3,10 @@ Run the uncoverml pipeline for clustering, supervised learning and prediction.
 
 .. program-output:: uncoverml --help
 """
+# import sys
+# import os
+# sys.path.insert(0, os.path.realpath('../../'))
+
 import logging
 import pickle
 import resource
@@ -50,9 +54,9 @@ def run_crossval(x_all, targets_all, config):
 @click.argument('pipeline_file')
 @click.option('-p', '--partitions', type=int, default=1,
               help='divide each node\'s data into this many partitions')
+
 def learn(pipeline_file, partitions):
     config = ls.config.Config(pipeline_file)
-
     targets_all, x_all = load_data(config, partitions)
 
     if config.cross_validate:
@@ -267,3 +271,15 @@ def _total_gb():
     # total_usage = mpiops.comm.reduce(my_usage, root=0)
     total_usage = ls.mpiops.comm.allreduce(my_usage)
     return total_usage
+
+
+# pipeline_file = '/home/masoud/uncover_venv/uncover-ml/configs/optimisation.yaml'
+# partitions = 1
+# config = ls.config.Config(pipeline_file)
+# targets_all, x_all = load_data(config, partitions)
+# if config.cross_validate:
+#     run_crossval(x_all, targets_all, config)
+# log.info("Learning full {} model".format(config.algorithm))
+# model = ls.learn.local_learn_model(x_all, targets_all, config)
+# ls.mpiops.run_once(ls.geoio.export_model, model, config)
+# log.info("Finished! Total mem = {:.1f} GB".format(_total_gb()))
