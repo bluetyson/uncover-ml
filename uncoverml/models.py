@@ -30,6 +30,7 @@ from uncoverml import mpiops
 from uncoverml.cubist import Cubist
 from uncoverml.cubist import MultiCubist
 from uncoverml.transforms import target as transforms
+from uncoverml.gp import SparseGPC
 
 #
 # Module constants
@@ -894,6 +895,11 @@ class LogisticRBF(encode_targets(kernelize(LogisticRegression)), TagsMixin):
     pass
 
 
+class GPClassifier(encode_targets(SparseGPC), TagsMixin):
+    """Sparse Gaussian Process Classifier."""
+    pass
+
+
 #
 # Helper functions for multiple outputs and missing/masked data
 #
@@ -1006,7 +1012,8 @@ classifiers = {
     'logisticrbf': LogisticRBF,
     'forestclassifier': RandomForestClassifier,
     'svc': SupportVectorClassifier,
-    'boostedtrees': GradBoostedTrees
+    'boostedtrees': GradBoostedTrees,
+    'gpclassifier': GPClassifier,
 }
 
 modelmaps = {**classifiers, **regressors}
