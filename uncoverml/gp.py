@@ -35,8 +35,10 @@ class SparseGPC:
 
     def fit(self, X, y):
         log.info("Initialising inducing points.")
+        init_size = 3 * max(100, self.n_inducing)
         km = MiniBatchKMeans(n_clusters=self.n_inducing,
-                             random_state=self.random_state)
+                             random_state=self.random_state,
+                             init_size=init_size)
         Z = km.fit(X).cluster_centers_
 
         # Make the likelihood
