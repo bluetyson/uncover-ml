@@ -23,6 +23,7 @@ Now:
 mkvirtualenv uncoverml
 toggleglobalsitepackages
 pip install gdal==2.0.1
+pip3 install git+https://github.com/GPflow/GPflow.git  # not in pypi
 ```
 
 Then download the uncoverml source, and install
