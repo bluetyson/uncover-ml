@@ -21,6 +21,7 @@ Now:
 
 ```
 mkvirtualenv uncoverml
+toggleglobalsitepackages
 pip install gdal==2.0.1
 ```
 
