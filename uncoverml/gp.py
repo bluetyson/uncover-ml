@@ -6,7 +6,7 @@ import tensorflow as tf
 from sklearn.cluster import MiniBatchKMeans
 from GPflow.svgp import SVGP
 from GPflow.likelihoods import MultiClass
-from GPflow.kernels import RBF, Matern32, Matern52, White
+from GPflow.kernels import RBF, Matern32, Matern52, ArcCosine, Linear
 
 
 log = logging.getLogger(__name__)
@@ -15,17 +15,18 @@ kernmap = {
     'RBF': RBF,
     'Matern32': Matern32,
     'Matern52': Matern52,
+    'ArcCosine': ArcCosine,
+    'Linear': Linear
 }
 
 
 class SparseGPC:
 
-    def __init__(self, kernel='RBF', lenscale=1, ARD=True, n_inducing=200,
-                 fix_inducing=False, maxiter=1000, minibatch_size=None,
-                 random_state=None):
+    def __init__(self, kernel='RBF', n_inducing=200, fix_inducing=False,
+                 maxiter=1000, minibatch_size=None, random_state=None,
+                 **kargs):
         self.kernel = kernel
-        self.lenscale = lenscale
-        self.ARD = ARD
+        self.kargs = kargs
         self.n_inducing = n_inducing
         self.fix_inducing = fix_inducing
         self.maxiter = maxiter
@@ -33,7 +34,6 @@ class SparseGPC:
         self.random_state = random_state
 
     def fit(self, X, y):
-        # Kmeans, with random state setting and restoration
         log.info("Initialising inducing points.")
         km = MiniBatchKMeans(n_clusters=self.n_inducing,
                              random_state=self.random_state)
@@ -45,8 +45,7 @@ class SparseGPC:
 
         # Make the kernels
         D = X.shape[1]
-        kern = kernmap[self.kernel](input_dim=D, lengthscales=self.lenscale,
-                                    ARD=self.ARD) + White(input_dim=D)
+        kern = kernmap[self.kernel](input_dim=D, **self.kargs)
 
         # Make the GP
         self.gp = SVGP(X=X, Y=y, kern=kern, likelihood=like, Z=Z,
@@ -85,11 +84,10 @@ class SparseGPC:
 
     def __repr__(self):
         repre = (
-            "{}(kernel={}, lenscale={}, ARD={}, n_inducing={},"
-            "fix_inducing={}, maxiter={}, minibatch_size={},"
-            "random_state={})"
+            "{}(kernel={}, n_inducing={}, fix_inducing={}, maxiter={},"
+            "minibatch_size={}, random_state={}, {})"
             .format(self.__class__.__name__, self.kernel, self.lenscale,
                     self.ARD, self.n_inducing, self.fix_inducing, self.maxiter,
-                    self.minibatch_size, self.random_state)
+                    self.minibatch_size, self.random_state, **self.kargs)
         )
         return repre
