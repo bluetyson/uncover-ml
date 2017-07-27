@@ -8,6 +8,10 @@ from GPflow.svgp import SVGP
 from GPflow.likelihoods import MultiClass
 from GPflow.kernels import RBF, Matern32, Matern52, ArcCosine, Linear
 
+# Allow multiple GPU sessions
+import GPflow
+GPflow._settings.settings.session.update(gpu_options=dict(allow_growth=True))
+
 
 log = logging.getLogger(__name__)
 
