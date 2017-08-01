@@ -6,7 +6,7 @@ import csv
 from uncoverml import features
 from uncoverml import mpiops
 from uncoverml import geoio
-from uncoverml.models import apply_masked
+from uncoverml.models import apply_masked, MaskRows
 from uncoverml import transforms
 
 log = logging.getLogger(__name__)
@@ -46,7 +46,20 @@ def predict(data, model, interval=0.95, **kwargs):
                 predres = np.hstack((predres, ml_pred[:, np.newaxis]))
 
             return predres
-    result = apply_masked(pred, data)
+
+    # Deal with the case when all the data is masked
+    okrows = MaskRows.get_complete_rows(data)
+    if okrows.sum() == 0:
+        dummy = pred(np.ones((1, data.data.shape[1])))  # for dim of return
+        # Now mask out everything
+        N = len(data)
+        dim = (N, dummy.shape[1]) if np.ndim(dummy) > 1 else (N,)
+        result = np.ma.masked_array(
+            data=np.empty(dim),
+            mask=np.ones(dim, dtype=bool)
+        )
+    else:
+        result = apply_masked(pred, data)
     return result
 
 
