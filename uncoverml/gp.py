@@ -4,13 +4,10 @@ import tensorflow as tf
 # from scipy.cluster.vq import kmeans
 
 from sklearn.cluster import MiniBatchKMeans
+import GPflow
 from GPflow.svgp import SVGP
 from GPflow.likelihoods import MultiClass
 from GPflow.kernels import RBF, Matern32, Matern52, ArcCosine, Linear
-
-# Allow multiple GPU sessions
-import GPflow
-GPflow._settings.settings.session.update(gpu_options=dict(allow_growth=True))
 
 
 log = logging.getLogger(__name__)
@@ -28,7 +25,7 @@ class SparseGPC:
 
     def __init__(self, kernel='RBF', n_inducing=200, fix_inducing=False,
                  maxiter=1000, minibatch_size=None, random_state=None,
-                 **kargs):
+                 multi_session=False, **kargs):
         self.kernel = kernel
         self.kargs = kargs
         self.n_inducing = n_inducing
@@ -36,6 +33,7 @@ class SparseGPC:
         self.maxiter = maxiter
         self.minibatch_size = minibatch_size
         self.random_state = random_state
+        self.multi_session = multi_session
 
     def fit(self, X, y):
         log.info("Initialising inducing points.")
@@ -54,6 +52,8 @@ class SparseGPC:
         kern = kernmap[self.kernel](input_dim=D, **self.kargs)
 
         # Make the GP
+        if self.multi_session:
+            _multiple_gp_session_per_gpu()
         self.gp = SVGP(X=X, Y=y, kern=kern, likelihood=like, Z=Z,
                        num_latent=K, q_diag=False,
                        minibatch_size=self.minibatch_size)
@@ -73,6 +73,8 @@ class SparseGPC:
         return self
 
     def predict(self, X):
+        if self.multi_session:
+            _multiple_gp_session_per_gpu()
         p = self.predict_proba(X)
         y = np.argmax(p, axis=1)
         return y
@@ -91,9 +93,16 @@ class SparseGPC:
     def __repr__(self):
         repre = (
             "{}(kernel={}, n_inducing={}, fix_inducing={}, maxiter={},"
-            "minibatch_size={}, random_state={}, {})"
+            "minibatch_size={}, random_state={}, multi_session={}, {})"
             .format(self.__class__.__name__, self.kernel, self.lenscale,
                     self.ARD, self.n_inducing, self.fix_inducing, self.maxiter,
-                    self.minibatch_size, self.random_state, **self.kargs)
+                    self.minibatch_size, self.random_state, self.multi_session,
+                    **self.kargs)
         )
         return repre
+
+
+def _multiple_gp_session_per_gpu():
+    GPflow._settings.settings.session.update(
+        gpu_options=dict(allow_growth=True)
+    )
