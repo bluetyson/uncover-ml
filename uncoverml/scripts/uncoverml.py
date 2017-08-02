@@ -274,6 +274,7 @@ def _total_gb():
 
 
 # pipeline_file = '/home/masoud/uncover_venv/uncover-ml/configs/optimisation.yaml'
+# pipeline_file = '/home/masoud/uncover_venv/uncover-ml/configs/depth_XGB.yaml'
 # partitions = 1
 # config = ls.config.Config(pipeline_file)
 # targets_all, x_all = load_data(config, partitions)

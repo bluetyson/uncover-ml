@@ -18,7 +18,7 @@ features:
       # - path: /short/ge3/jrw547/Murray_datasets2/LOC_distance_to_coast.tif
       # - path: /short/ge3/jrw547/GA-cover2/Th_v1.tif
       # - path: /short/ge3/jrw547/GA-cover2/rat15thk.tif
-      - list: list.txt
+      - list: /home/masoud/uncover_venv/uncover-ml/configs/list.txt
       # - directory: /short/ge3/jrw547/GA-cover2
     transforms:
       - centre
@@ -51,11 +51,13 @@ preprocessing:
 
 
 targets:
-  file: /g/data1/ge3/john/jobs/murray_B_depth/Targets_2017/Targets_MurrayB_confid3_resampled_50p.shp
+  #file: /g/data1/ge3/john/jobs/murray_B_depth/Targets_2017/Targets_MurrayB_confid3_resampled_50p.shp
+  file: /media/masoud/16B0BE6AB0BE4FCB/fromJohn/Targets_2017/Targets_MurrayB_confid3_resampled_50p.shp
   property: depth
 
 mask:
-  file: /short/ge3/jrw547/Murray_datasets2/maskclip3.tif
+  #file: /short/ge3/jrw547/Murray_datasets2/maskclip3.tif
+  file: /media/masoud/16B0BE6AB0BE4FCB/fromJohn/Targets_2017/maskclip3.tif
   retain: 0
 
 learning:
@@ -80,6 +82,7 @@ optimisation:
     max_depth: [10, 20, 100]
     ml_score: [False]
   optimisation_output: optimisation.csv
+
 
 prediction:
   quantiles: 0.95
