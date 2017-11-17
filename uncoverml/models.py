@@ -304,7 +304,7 @@ class ApproxGP(BasisMakerMixin, StandardLinearModel, PredictProbaMixin,
                  nstarts=100):
 
         super().__init__(basis=None,
-                         var=Parameter(var, Positive()),
+                         var=Parameter(var, Positive(upper=5)),
                          tol=tol,
                          maxiter=maxiter,
                          nstarts=nstarts
