@@ -301,10 +301,10 @@ class ApproxGP(BasisMakerMixin, StandardLinearModel, PredictProbaMixin,
 
     def __init__(self, kernel='rbf', nbases=50, lenscale=1., var=1.,
                  regulariser=1., ard=True, tol=1e-8, maxiter=1000,
-                 nstarts=100):
+                 nstarts=100, maxvar=1.0):
 
         super().__init__(basis=None,
-                         var=Parameter(var, Positive(upper=5)),
+                         var=Parameter(var, Positive(upper=maxvar)),
                          tol=tol,
                          maxiter=maxiter,
                          nstarts=nstarts
