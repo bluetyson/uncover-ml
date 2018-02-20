@@ -184,7 +184,7 @@ class Config:
                         self.plot_covariates = d['files']['plot_covariates']
                     else:
                         self.plot_covariates = False
-                    s['features'].pop(n)
+                    s['features'].pop(n)  # pop `pickle` features
         else:
             self.pickle_load = False
 
