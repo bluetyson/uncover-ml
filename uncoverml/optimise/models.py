@@ -261,7 +261,7 @@ class TransformedGPRegressor(TransformMixin, GaussianProcessRegressor,
                  normalize_y=False, copy_X_train=True, random_state=None,
                  ml_score=False
                  ):
-
+        log.info('GP initialised using kernel {}'.format(kernel))
         # uncoverml compatibility if string is passed
         if isinstance(kernel, str):
             kernel = kernels[kernel]()

@@ -140,11 +140,19 @@ class Config:
         self.patchsize = 0
 
         self.algorithm = s['learning']['algorithm']
+        self.sklearn_gp = self.algorithm == 'transformedgp'
         self.cubist = self.algorithm == 'cubist'
         self.multicubist = self.algorithm == 'multicubist'
         self.multirandomforest = self.algorithm == 'multirandomforest'
         self.krige = self.algorithm == 'krige'
         self.algorithm_args = s['learning']['arguments']
+
+        # hack to introduce complex kernel
+        if self.sklearn_gp:
+            if s['learning']['arguments']['kernel'][-3:] == '.py':
+                from configs.gp_kernel import kernel
+                self.algorithm_args['kernel'] = kernel
+
         self.quantiles = s['prediction']['quantiles']
         self.outbands = None
         if 'outbands' in s['prediction']:
