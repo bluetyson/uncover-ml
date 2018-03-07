@@ -1,4 +1,5 @@
 import logging
+import importlib.util
 from os import path
 from os import makedirs
 import glob
@@ -117,6 +118,14 @@ class FeatureSetConfig:
                                                           is_categorical)
 
 
+def load_kernel(kernel_file):
+    module_name = 'gp_kernel'
+    spec = importlib.util.spec_from_file_location(module_name, kernel_file)
+    gp_kernel = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gp_kernel)
+    return gp_kernel
+
+
 class Config:
     """Class representing the global configuration of the uncoverml scripts
 
@@ -150,8 +159,8 @@ class Config:
         # hack to introduce complex kernel
         if self.sklearn_gp:
             if s['learning']['arguments']['kernel'][-3:] == '.py':
-                from configs.gp_kernel import kernel
-                self.algorithm_args['kernel'] = kernel
+                gp_kernel = load_kernel(s['learning']['arguments']['kernel'])
+                self.algorithm_args['kernel'] = gp_kernel.kernel
 
         self.quantiles = s['prediction']['quantiles']
         self.outbands = None
