@@ -35,7 +35,7 @@ Then run the demo locally:
 
 ```bash
 source /g/data/ge3/john/uncover-ml/create_uncoverml_env.sh
-cd ~/bash
+cd ~/demo
 uncoverml learn sirsam_Na.yaml -p 4
 uncoverml predict sirsam_Na.model -p 10
 ```
