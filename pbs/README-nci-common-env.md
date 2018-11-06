@@ -3,7 +3,7 @@
 1. Activate `uncoverml` virtualenv by issuing the following command
 
 ```bash
-$ /g/data/ge3/john/uncover-ml/create_uncoverml_env.sh
+$ source /g/data/ge3/john/uncover-ml/create_uncoverml_env.sh
 ``` 
 That is it. You are all set to use `uncoverml` in NCI.
 
