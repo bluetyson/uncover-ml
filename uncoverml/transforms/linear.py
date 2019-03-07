@@ -57,8 +57,7 @@ class LogTransform:
 
         # add small +ve value for stable log
         x += self.stabilizer
-
-        return np.log(x)
+        return np.ma.log(x)
 
 
 class WhitenTransform:
