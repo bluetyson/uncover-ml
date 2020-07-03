@@ -1,0 +1,14 @@
+{
+    "adjusted_r2_score": 15.137460144207907,
+    "adjusted_r2_score_transformed": 6.773031101507955,
+    "expvar": -2.5983654641788725,
+    "expvar_transformed": -0.45637290601685143,
+    "lins_ccc": 0.30319986454845826,
+    "lins_ccc_transformed": 0.18116475680790609,
+    "mll": 9.025337146538163,
+    "mll_transformed": 2.7658562876565145,
+    "r2_score": -3.778909672648356,
+    "r2_score_transformed": -1.0490291022967688,
+    "smse": 4.778909672648356,
+    "smse_transformed": 2.0490291022967684
+}

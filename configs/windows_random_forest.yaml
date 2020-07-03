@@ -10,14 +10,14 @@ learning:
 features:
   - type: ordinal
     files:
-      - directory: 'C:\path\to\uncoverml\uncover-ml\tests\test_data\sirsam\covariates'
+      - directory: 'C:\Users\rscott\OneDrive - OZ Minerals\Exploration\uncover-ml\tests\test_data\sirsam\covariates'
     transforms:
       - centre
       - standardise
     imputation: mean
 
 targets:
-  file: 'C:\path\to\uncoverml\tests\test_data\sirsam\targets\geochem_sites_log.shp'
+  file: 'C:\Users\rscott\OneDrive - OZ Minerals\Exploration\uncover-ml\tests\test_data\sirsam\targets\geochem_sites_log.shp'
   property: Na_ppm_imp
 
 validation:
@@ -32,13 +32,13 @@ prediction:
   outbands: 4
 
 output:
-  directory: 'C:\path\to\uncover-ml\random_forest_out'
+  directory: 'C:\Users\rscott\OneDrive - OZ Minerals\Exploration\uncover-ml\random_forest_out'
 
   # By default, model file will be saved in output directory.            #
   # Model can be saved to a specific path if desired, and different      #
   # model files can be loaded for the prediction step if specified here. #
 
-  model: 'C:\path\to\uncover-ml\random_forest_out\random_forest.model'
+  model: 'C:\Users\rscott\OneDrive - OZ Minerals\Exploration\uncover-ml\random_forest_out\random_forest.model'
 
   plot_feature_ranks: True
   plot_intersection: True
